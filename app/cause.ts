@@ -1,0 +1,6 @@
+// Campanha divulgada no topo do site. Use null para esconder.
+export const cause: { title: string; text: string; href: string } | null = {
+  title: "Cure a Valentina",
+  text: "Ajude a campanha",
+  href: "https://linktr.ee/cureavalentina",
+};

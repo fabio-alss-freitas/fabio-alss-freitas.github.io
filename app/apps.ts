@@ -22,7 +22,7 @@ export const apps: App[] = [
     kicker: "Aviação · Meteorologia",
     title: "O briefing meteorológico que cabe no bolso.",
     lead:
-      "METAR, TAF, NOTAM, SIGMET, SIGWX, ATIS, satélite e radar de fontes oficiais, com cores que destacam teto, visibilidade e fenômenos, e decodificação em linguagem simples.",
+      "Antes de decolar, o AeroMet reúne a meteorologia oficial de todo o seu trajeto. As cores mostram de relance o teto e a visibilidade, os boletins e avisos chegam traduzidos para uma linguagem simples, e o radar e o satélite aparecem sobre a sua rota, com o voo acompanhado do início ao fim.",
     icon: "/img/aeromet-icon.png",
     shots: ["/img/shots/aeromet-04-map.jpg", "/img/shots/aeromet-07-metar.jpg"],
     accent: "#1d9bf0",

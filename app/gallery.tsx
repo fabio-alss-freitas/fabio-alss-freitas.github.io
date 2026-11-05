@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { apps, type App, type StoreLink } from "./apps";
+import { cause } from "./cause";
 
 export default function Gallery() {
   const [index, setIndex] = useState(0);
@@ -47,7 +48,23 @@ export default function Gallery() {
           <Logo />
           FRESAN
         </span>
-        <p className="tagline">Desenvolvedor independente criando soluções para o dia a dia.</p>
+        {cause && (
+          <a className="cause" href={cause.href} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+              <path
+                fill="currentColor"
+                d="M12 21s-7.5-4.6-9.6-9.3C.9 8.2 3 4.5 6.6 4.5c2 0 3.4 1.1 4.4 2.5 1-1.4 2.4-2.5 4.4-2.5 3.6 0 5.7 3.7 4.2 7.2C19.5 16.4 12 21 12 21z"
+              />
+            </svg>
+            <span>
+              <strong>{cause.title}</strong>
+              <small>{cause.text}</small>
+            </span>
+            <span className="cause-arrow" aria-hidden>
+              →
+            </span>
+          </a>
+        )}
       </header>
 
       <main className="slides" aria-roledescription="carrossel" aria-label="Apps">
@@ -60,7 +77,8 @@ export default function Gallery() {
         <button className="arrow" onClick={() => go(-1)} aria-label="App anterior">
           <Chevron dir="left" />
         </button>
-        <div className="tabs" role="tablist">
+        <div className="tabs" role="tablist" style={{ "--i": index, "--n": apps.length } as CSSProperties}>
+          <span className="tab-glow" aria-hidden />
           {apps.map((a, i) => (
             <button
               key={a.id}

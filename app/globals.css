@@ -50,8 +50,7 @@ button {
 }
 
 .meta,
-.chip,
-.tagline {
+.chip {
   font-family: var(--font-mono), ui-monospace, monospace;
 }
 
@@ -77,12 +76,32 @@ button {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--accent) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 22%, transparent) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(70% 70% at 60% 45%, #000 10%, transparent 75%);
   -webkit-mask-image: radial-gradient(70% 70% at 60% 45%, #000 10%, transparent 75%);
-  opacity: 0.6;
+  opacity: 0.55;
+}
+
+/* Feixe de luz que varre a grade */
+.grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0, color-mix(in srgb, var(--accent) 45%, transparent) 50%, transparent 100%);
+  height: 180px;
+  animation: scan 7s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes scan {
+  from {
+    translate: 0 -200px;
+  }
+  to {
+    translate: 0 110vh;
+  }
 }
 
 .top,
@@ -112,10 +131,60 @@ button {
   letter-spacing: 0.08em;
 }
 
-.tagline {
-  margin: 0;
-  font-size: 12.5px;
-  color: var(--ink-2);
+.cause {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px 7px 10px;
+  border: 1px solid rgba(255, 92, 138, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 92, 138, 0.08);
+  color: #ff7aa2;
+  text-decoration: none;
+  line-height: 1.2;
+  box-shadow: 0 0 24px rgba(255, 92, 138, 0.12);
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.cause svg {
+  flex: none;
+  animation: beat 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 92, 138, 0.8));
+}
+
+@keyframes beat {
+  0%, 60%, 100% {
+    scale: 1;
+  }
+  30% {
+    scale: 1.18;
+  }
+}
+
+.cause strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cause small {
+  font-size: 11.5px;
+  color: #ff9db9;
+}
+
+.cause-arrow {
+  transition: translate 0.2s;
+}
+
+.cause:hover {
+  background: rgba(255, 92, 138, 0.14);
+  border-color: rgba(255, 92, 138, 0.6);
+  box-shadow: 0 0 32px rgba(255, 92, 138, 0.25);
+}
+
+.cause:hover .cause-arrow {
+  translate: 3px 0;
 }
 
 /* ---------- Slides empilhados na mesma célula ---------- */
@@ -170,6 +239,7 @@ button {
 .meta {
   font-size: 12px;
   color: var(--accent);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
 }
 
 .slide-title {
@@ -178,6 +248,7 @@ button {
   font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.045em;
+  text-shadow: 0 0 40px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .slide-lead {
@@ -281,6 +352,8 @@ button {
   background: linear-gradient(150deg, #3a3d48, #15161c 45%, #2c2f39);
   box-shadow:
     0 40px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 36px color-mix(in srgb, var(--accent) 35%, transparent),
     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -399,8 +472,10 @@ button {
 }
 
 .arrow:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
 .arrow:active {
@@ -408,41 +483,75 @@ button {
 }
 
 .tabs {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid var(--line);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+  padding: 5px;
+  border: 1px solid var(--line-2);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Indicador que desliza até a aba ativa, com brilho na cor do app */
+.tab-glow {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: calc((100% - 10px) / var(--n));
+  border-radius: 999px;
+  translate: calc(var(--i) * 100%) 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent),
+    color-mix(in srgb, var(--accent) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 80%, transparent);
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--accent) 55%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--accent) 30%, transparent);
+  transition: translate 0.55s cubic-bezier(0.3, 1.4, 0.4, 1);
 }
 
 .tab {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 6px 14px 6px 6px;
+  min-width: 132px;
+  padding: 8px 16px 8px 8px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   font-size: 14px;
-  color: var(--ink-2);
+  color: var(--ink-3);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: color 0.3s;
 }
 
 .tab img {
   border-radius: 6px;
+  filter: grayscale(0.7) brightness(0.8);
+  transition: filter 0.3s, scale 0.3s;
 }
 
 .tab:hover {
   color: var(--ink);
 }
 
+.tab:hover img {
+  filter: none;
+}
+
 .tab[aria-selected="true"] {
-  background: color-mix(in srgb, var(--tab) 22%, rgba(255, 255, 255, 0.06));
   color: var(--ink);
+}
+
+.tab[aria-selected="true"] img {
+  filter: none;
+  scale: 1.08;
 }
 
 .arrow:focus-visible,
@@ -488,14 +597,15 @@ button {
 }
 
 @media (max-width: 560px) {
-  .tagline {
-    display: none;
-  }
   .tab span {
     display: none;
   }
   .tab {
-    padding: 6px;
+    min-width: 52px;
+    padding: 8px;
+  }
+  .cause small {
+    display: none;
   }
   .slide-head {
     margin-bottom: 18px;
