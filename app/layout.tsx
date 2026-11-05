@@ -7,12 +7,12 @@ const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fresan.digital"),
-  title: "FRESAN — estúdio de software e apps",
+  title: "FRESAN — apps",
   description:
-    "Estúdio de tecnologia que cria apps para iOS, Android e web. Produtos: AeroMet, AeroHelper e Orbify.",
+    "Apps de um desenvolvedor independente, criando soluções para o dia a dia: AeroMet, AeroHelper e Orbify.",
   openGraph: {
     title: "FRESAN",
-    description: "Estúdio de tecnologia que cria apps para iOS, Android e web.",
+    description: "Apps de um desenvolvedor independente: AeroMet, AeroHelper e Orbify.",
     url: "https://fresan.digital",
     siteName: "FRESAN",
     locale: "pt_BR",
