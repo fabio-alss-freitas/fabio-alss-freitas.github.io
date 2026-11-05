@@ -133,7 +133,9 @@ function Slide({ app, active }: { app: App; active: boolean }) {
           </p>
         )}
       </div>
-      <div className="slide-visual">{app.shots.length ? <Phones app={app} /> : <Globe />}</div>
+      <div className="slide-visual">
+        {app.video ? <BrowserVideo video={app.video} active={active} /> : <Phones app={app} />}
+      </div>
     </article>
   );
 }
@@ -150,39 +152,23 @@ function Phones({ app }: { app: App }) {
   );
 }
 
-// Ilustração do Orbify: um globo com memórias presas na superfície.
-function Globe() {
-  const pins = [
-    { x: 30, y: 34, r: -8, c: "linear-gradient(160deg,#f6b26b,#c0577a)" },
-    { x: 64, y: 28, r: 6, c: "linear-gradient(160deg,#9fd8ff,#3f6fd1)" },
-    { x: 70, y: 60, r: -4, c: "linear-gradient(160deg,#b8f2c8,#2a9d8f)" },
-    { x: 40, y: 66, r: 9, c: "linear-gradient(160deg,#ffe29a,#f08a4b)" },
-  ];
+function BrowserVideo({ video, active }: { video: NonNullable<App["video"]>; active: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  // Só toca o vídeo do app visível.
+  useEffect(() => {
+    if (active) ref.current?.play().catch(() => {});
+    else ref.current?.pause();
+  }, [active]);
   return (
-    <div className="globe" aria-hidden>
-      <svg viewBox="0 0 200 200" className="graticule">
-        {[30, 55, 80].map((ry) => (
-          <ellipse key={ry} cx="100" cy="100" rx="98" ry={ry} />
-        ))}
-        {[20, 50, 80].map((rx) => (
-          <ellipse key={rx} cx="100" cy="100" rx={rx} ry="98" />
-        ))}
-        <line x1="100" y1="2" x2="100" y2="198" />
-        <line x1="2" y1="100" x2="198" y2="100" />
-        <path d="M60 68 Q 100 24 128 56" className="arc" />
-        <path d="M128 56 Q 152 92 140 120" className="arc" />
-        <path d="M140 120 Q 110 154 80 132" className="arc" />
-      </svg>
-      {pins.map((p, i) => (
-        <div
-          key={i}
-          className="pin"
-          style={{ left: `${p.x}%`, top: `${p.y}%`, transform: `translate(-50%,-50%) rotate(${p.r}deg)`, animationDelay: `${i * 0.8}s` }}
-        >
-          <div className="pin-photo" style={{ background: p.c }} />
-        </div>
-      ))}
-    </div>
+    <figure className="browser">
+      <div className="browser-bar" aria-hidden>
+        <i />
+        <i />
+        <i />
+        <span>{video.url}</span>
+      </div>
+      <video ref={ref} src={video.src} poster={video.poster} muted loop playsInline preload="metadata" aria-label="Orbify em uso no navegador" />
+    </figure>
   );
 }
 

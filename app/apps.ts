@@ -8,6 +8,8 @@ export type App = {
   lead: string;
   icon: string;
   shots: string[];
+  // Gravação da versão web, mostrada numa janela de navegador no lugar dos celulares.
+  video?: { src: string; poster: string; url: string };
   accent: string;
   platforms: string;
   links: StoreLink[];
@@ -22,7 +24,7 @@ export const apps: App[] = [
     kicker: "Aviação · Meteorologia",
     title: "O briefing meteorológico que cabe no bolso.",
     lead:
-      "Feito para a rotina de quem voa por profissão. O AeroMet monta o briefing do seu voo com dados oficiais: METAR e TAF de origem, destino e alternados com teto e visibilidade em destaque, NOTAM e SIGMET filtrados pela rota e pelo horário, e radar e satélite sobre o trajeto. Mudou a EOBT, o briefing inteiro acompanha.",
+      "Feito para a rotina de quem voa por profissão. O AeroMet monta o briefing do seu voo com dados oficiais: METAR e TAF de origem, destino e alternados com teto e visibilidade em destaque, NOTAM e SIGMET filtrados pela rota e pelo horário, e radar e satélite sobre o trajeto.",
     icon: "/img/aeromet-icon.png",
     shots: ["/img/shots/aeromet-04-map.jpg", "/img/shots/aeromet-07-metar.jpg"],
     accent: "#1d9bf0",
@@ -63,8 +65,9 @@ export const apps: App[] = [
       "Suas fotos e vídeos aparecem num globo, cada um no lugar onde foi feito, com trilha sonora e a paisagem sonora do lugar. Dá para girar o planeta e reviver cada viagem.",
     icon: "/img/orbify-icon.png",
     shots: [],
+    video: { src: "/img/shots/orbify.mp4", poster: "/img/shots/orbify-poster.jpg", url: "orbify.fresan.digital" },
     accent: "#22a8d6",
-    platforms: "Web · iOS em breve",
+    platforms: "Web · Android e iOS em breve",
     links: [{ kind: "web", href: "https://orbify.fresan.digital", label: "Abrir o Orbify" }],
   },
 ];

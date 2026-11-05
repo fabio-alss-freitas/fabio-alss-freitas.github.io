@@ -386,67 +386,57 @@ button {
   transform: scale(0.92) translateX(24px);
 }
 
-.globe {
-  position: relative;
-  width: min(84%, 440px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22), transparent 35%),
-    radial-gradient(circle at 50% 50%, #12456b, #0a2440 60%, #050d1d);
+.browser {
+  width: min(100%, 640px);
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111317;
   box-shadow:
-    inset -30px -40px 80px rgba(0, 0, 0, 0.6),
-    0 0 90px color-mix(in srgb, var(--accent) 45%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+    0 40px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 40px color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.graticule {
-  position: absolute;
-  inset: 0;
+.slide:not(.is-active) .browser {
+  transform: translateX(24px) scale(0.98);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.browser-bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a3c43;
+}
+
+.browser-bar span {
+  flex: 1;
+  margin: 0 40px 0 16px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.browser video {
+  display: block;
   width: 100%;
-  height: 100%;
-}
-
-.graticule ellipse,
-.graticule line {
-  fill: none;
-  stroke: rgba(159, 216, 255, 0.16);
-  stroke-width: 0.6;
-}
-
-.graticule .arc {
-  fill: none;
-  stroke: #7fdcff;
-  stroke-width: 1.2;
-  stroke-dasharray: 3 3;
-  animation: dash 3s linear infinite;
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: -12;
-  }
-}
-
-.pin {
-  position: absolute;
-  width: 23%;
-  padding: 5% 5% 14%;
-  border-radius: 4px;
-  background: #f7f4ec;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
-  animation: bob 6s ease-in-out infinite;
-}
-
-.pin-photo {
-  aspect-ratio: 1;
-  border-radius: 2px;
-}
-
-@keyframes bob {
-  50% {
-    margin-top: -8px;
-  }
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  background: #0a0c10;
 }
 
 /* ---------- Setas e abas ---------- */
@@ -582,9 +572,6 @@ button {
   }
   .phones {
     width: min(100%, 300px);
-  }
-  .globe {
-    width: min(70%, 300px);
   }
   .controls {
     position: sticky;
