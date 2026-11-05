@@ -22,7 +22,7 @@ export const apps: App[] = [
     kicker: "Aviação · Meteorologia",
     title: "O briefing meteorológico que cabe no bolso.",
     lead:
-      "Antes de decolar, o AeroMet reúne a meteorologia oficial de todo o seu trajeto. As cores mostram de relance o teto e a visibilidade, os boletins e avisos chegam traduzidos para uma linguagem simples, e o radar e o satélite aparecem sobre a sua rota, com o voo acompanhado do início ao fim.",
+      "Feito para a rotina de quem voa por profissão. O AeroMet monta o briefing do seu voo com dados oficiais: METAR e TAF de origem, destino e alternados com teto e visibilidade em destaque, NOTAM e SIGMET filtrados pela rota e pelo horário, e radar e satélite sobre o trajeto. Mudou a EOBT, o briefing inteiro acompanha.",
     icon: "/img/aeromet-icon.png",
     shots: ["/img/shots/aeromet-04-map.jpg", "/img/shots/aeromet-07-metar.jpg"],
     accent: "#1d9bf0",
