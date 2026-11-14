@@ -243,6 +243,7 @@ button {
 }
 
 .slide-title {
+  text-wrap: balance;
   margin: 0 0 18px;
   font-size: clamp(32px, 4.4vw, 56px);
   font-weight: 600;
@@ -277,11 +278,12 @@ button {
   font-weight: 600;
   line-height: 1.1;
   text-decoration: none;
-  transition: background 0.15s, transform 0.15s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .store:hover {
-  background: #d4d4d8;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 .store:active {
@@ -378,6 +380,20 @@ button {
   opacity: 0.9;
 }
 
+.slide.is-active .phone-1 {
+  animation: float 7s ease-in-out infinite;
+}
+
+.slide.is-active .phone-2 {
+  animation: float 7s ease-in-out -3.5s infinite;
+}
+
+@keyframes float {
+  50% {
+    translate: 0 -10px;
+  }
+}
+
 .slide:not(.is-active) .phone-1 {
   transform: translateX(-24px);
 }
@@ -386,57 +402,33 @@ button {
   transform: scale(0.92) translateX(24px);
 }
 
-.browser {
-  width: min(100%, 640px);
-  margin: 0;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #111317;
-  box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.55),
-    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
-    0 0 40px color-mix(in srgb, var(--accent) 35%, transparent);
-  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+/* Vídeo de fundo: o texto fica à esquerda, sobre o degradê; a polaroid da gravação aparece à direita. */
+.bg-video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
 }
 
-.slide:not(.is-active) .browser {
-  transform: translateX(24px) scale(0.98);
+.bg-video.is-active {
+  opacity: 1;
 }
 
-.browser-bar {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  height: 34px;
-  padding: 0 12px;
-  border-bottom: 1px solid var(--line);
-}
-
-.browser-bar i {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #3a3c43;
-}
-
-.browser-bar span {
-  flex: 1;
-  margin: 0 40px 0 16px;
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  font-family: var(--font-mono), monospace;
-  font-size: 11.5px;
-  color: var(--ink-2);
-  text-align: center;
-}
-
-.browser video {
-  display: block;
+.bg-video video {
   width: 100%;
-  aspect-ratio: 8 / 5;
+  height: 100%;
   object-fit: cover;
-  background: #0a0c10;
+  object-position: right center;
+}
+
+.bg-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--bg) 8%, rgba(6, 7, 8, 0.88) 32%, transparent 62%),
+    linear-gradient(180deg, rgba(6, 7, 8, 0.75), transparent 18%, transparent 78%, var(--bg));
 }
 
 /* ---------- Setas e abas ---------- */
@@ -479,10 +471,12 @@ button {
   padding: 5px;
   border: 1px solid var(--line-2);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: rgba(10, 12, 16, 0.55);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 /* Indicador que desliza até a aba ativa, com brilho na cor do app */
@@ -573,6 +567,25 @@ button {
   .phones {
     width: min(100%, 300px);
   }
+  /* Em tela estreita o vídeo vira uma faixa no topo, atrás do cabeçalho, e o texto vem embaixo. */
+  .bg-video {
+    inset: 0 0 auto;
+    height: calc(62.5vw + 80px);
+    mask-image: linear-gradient(#000 55%, transparent);
+    -webkit-mask-image: linear-gradient(#000 55%, transparent);
+  }
+  .bg-video video {
+    object-position: center;
+  }
+  .bg-video::after {
+    background: linear-gradient(180deg, rgba(6, 7, 8, 0.75), transparent 45%);
+  }
+  .slide.has-video {
+    align-self: start;
+  }
+  .slide.has-video .slide-visual {
+    height: 50vw;
+  }
   .controls {
     position: sticky;
     bottom: 0;
@@ -607,5 +620,42 @@ button {
   }
   .phone img {
     border-radius: 18px;
+  }
+}
+
+/* ---------- Telas largas: abas no topo, setas nas laterais ---------- */
+
+@media (min-width: 901px) {
+  .controls {
+    position: absolute;
+    top: 19px;
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  .controls > * {
+    pointer-events: auto;
+  }
+  .tab {
+    min-width: 112px;
+  }
+  .arrow {
+    position: fixed;
+    top: 50%;
+    left: clamp(2px, (100vw - var(--max)) / 4, 32px);
+    width: 40px;
+    height: 40px;
+    translate: 0 -50%;
+    border-color: transparent;
+    background: transparent;
+    color: var(--ink-3);
+  }
+  .arrow:last-child {
+    left: auto;
+    right: clamp(2px, (100vw - var(--max)) / 4, 32px);
   }
 }

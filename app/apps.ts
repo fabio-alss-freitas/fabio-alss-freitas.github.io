@@ -8,8 +8,8 @@ export type App = {
   lead: string;
   icon: string;
   shots: string[];
-  // Gravação da versão web, mostrada numa janela de navegador no lugar dos celulares.
-  video?: { src: string; poster: string; url: string };
+  // Gravação da versão web, usada como fundo do slide no lugar dos celulares.
+  video?: { src: string; poster: string };
   accent: string;
   platforms: string;
   links: StoreLink[];
@@ -49,7 +49,7 @@ export const apps: App[] = [
     icon: "/img/aerohelper-icon.png",
     shots: ["/img/shots/aerohelper-1.jpg", "/img/shots/aerohelper-2.jpg"],
     accent: "#12c77a",
-    platforms: "iOS · Android · iPad",
+    platforms: "iOS · Android",
     links: [
       { kind: "appstore", href: "https://apps.apple.com/br/app/aerohelper/id6827271511" },
       { kind: "play", href: "https://play.google.com/store/apps/details?id=com.fresan.aerohelper" },
@@ -65,7 +65,7 @@ export const apps: App[] = [
       "Suas fotos e vídeos aparecem num globo, cada um no lugar onde foi feito, com trilha sonora e a paisagem sonora do lugar. Dá para girar o planeta e reviver cada viagem.",
     icon: "/img/orbify-icon.png",
     shots: [],
-    video: { src: "/img/shots/orbify.mp4", poster: "/img/shots/orbify-poster.jpg", url: "orbify-app.com" },
+    video: { src: "/img/shots/orbify-globo.mp4", poster: "/img/shots/orbify-globo.jpg" },
     accent: "#22a8d6",
     platforms: "Web · Android e iOS em breve",
     links: [{ kind: "web", href: "https://orbify-app.com", label: "Abrir o Orbify" }],
