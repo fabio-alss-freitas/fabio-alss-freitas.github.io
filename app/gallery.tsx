@@ -42,6 +42,7 @@ export default function Gallery() {
       }}
     >
       <div className="grid-bg" aria-hidden />
+      {apps.map((a, i) => a.video && <BgVideo key={a.id} video={a.video} active={i === index} />)}
 
       <header className="top">
         <span className="brand">
@@ -103,7 +104,7 @@ export default function Gallery() {
 
 function Slide({ app, active }: { app: App; active: boolean }) {
   return (
-    <article className={`slide ${active ? "is-active" : ""}`} aria-hidden={!active} inert={!active}>
+    <article className={`slide ${active ? "is-active" : ""} ${app.video ? "has-video" : ""}`} aria-hidden={!active} inert={!active}>
       <div className="slide-copy">
         <div className="slide-head">
           <img src={app.icon} alt="" width={56} height={56} />
@@ -133,9 +134,8 @@ function Slide({ app, active }: { app: App; active: boolean }) {
           </p>
         )}
       </div>
-      <div className="slide-visual">
-        {app.video ? <BrowserVideo video={app.video} active={active} /> : <Phones app={app} />}
-      </div>
+      {/* Com vídeo, a coluna fica vazia: o vídeo é o fundo do palco. */}
+      <div className="slide-visual">{!app.video && <Phones app={app} />}</div>
     </article>
   );
 }
@@ -152,7 +152,7 @@ function Phones({ app }: { app: App }) {
   );
 }
 
-function BrowserVideo({ video, active }: { video: NonNullable<App["video"]>; active: boolean }) {
+function BgVideo({ video, active }: { video: NonNullable<App["video"]>; active: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   // Só toca o vídeo do app visível.
   useEffect(() => {
@@ -160,15 +160,9 @@ function BrowserVideo({ video, active }: { video: NonNullable<App["video"]>; act
     else ref.current?.pause();
   }, [active]);
   return (
-    <figure className="browser">
-      <div className="browser-bar" aria-hidden>
-        <i />
-        <i />
-        <i />
-        <span>{video.url}</span>
-      </div>
-      <video ref={ref} src={video.src} poster={video.poster} muted loop playsInline preload="metadata" aria-label="Orbify em uso no navegador" />
-    </figure>
+    <div className={`bg-video ${active ? "is-active" : ""}`} aria-hidden>
+      <video ref={ref} src={video.src} poster={video.poster} muted loop playsInline preload="metadata" />
+    </div>
   );
 }
 
