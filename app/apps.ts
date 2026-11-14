@@ -65,9 +65,9 @@ export const apps: App[] = [
       "Suas fotos e vídeos aparecem num globo, cada um no lugar onde foi feito, com trilha sonora e a paisagem sonora do lugar. Dá para girar o planeta e reviver cada viagem.",
     icon: "/img/orbify-icon.png",
     shots: [],
-    video: { src: "/img/shots/orbify.mp4", poster: "/img/shots/orbify-poster.jpg", url: "orbify.fresan.digital" },
+    video: { src: "/img/shots/orbify.mp4", poster: "/img/shots/orbify-poster.jpg", url: "orbify-app.com" },
     accent: "#22a8d6",
     platforms: "Web · Android e iOS em breve",
-    links: [{ kind: "web", href: "https://orbify.fresan.digital", label: "Abrir o Orbify" }],
+    links: [{ kind: "web", href: "https://orbify-app.com", label: "Abrir o Orbify" }],
   },
 ];
